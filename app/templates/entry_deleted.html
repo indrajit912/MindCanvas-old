@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Update Entry{% endblock %}
+
+{% block content %}
+    <!-- Flash Message on success -->
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ get_flashed_messages()[0] }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Journal Entries</h1>
+
+        <ul class="list-group mt-3">
+            {% for entry in entries %}
+                <li class="list-group-item">
+                    <h2>{{ entry.title }}</h2>
+                    <p><strong>Date & Time (IST):</strong> {{ entry.datetime_utc|datetimeformat }}</p>
+                    <p><strong>Text:</strong> {{ entry.text }}</p>
+                    <a href="{{ url_for('update_entry', entry_id=loop.index-1) }}" class="btn btn-warning">Update</a>
+                    <a href="{{ url_for('delete_entry', entry_id=loop.index-1) }}" class="btn btn-danger">Delete</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <br>
+        <br>
+    </div>
+
+{% endblock %}

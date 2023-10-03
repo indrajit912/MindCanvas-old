@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}View Entry{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4">{{ entry.title }}</h1>
+    <p><strong>Date & Time (IST):</strong> {{ entry.datetime_utc|datetimeformat }}</p>
+    <p><strong>Text:</strong></p>
+    <p>{{ entry.text }}</p>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('update_entry', entry_id=entry_id) }}" class="btn btn-warning">Update</a>
+        <a href="{{ url_for('delete_entry', entry_id=entry_id) }}" class="btn btn-danger">Delete</a>
+        <a href="{{ url_for('view_entries') }}" class="btn btn-primary">Back to Entries</a>
+    </div>
+</div>
+{% endblock %}

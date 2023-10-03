@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}View Entry{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="display-4 mb-4">Journal Entries</h1>
+
+    <div class="row">
+        {% for entry in entries %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title">{{ entry.title }}</h2>
+                    <p class="card-text"><strong>Date & Time (IST):</strong> {{ entry.datetime_utc|datetimeformat }}</p>
+                    <p class="card-text"><strong>Text:</strong> {{ entry.text[:60] + "...." }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('view_entry', entry_id=loop.index-1) }}" class="btn btn-primary">View</a>
+                    <a href="{{ url_for('update_entry', entry_id=loop.index-1) }}" class="btn btn-warning">Update</a>
+                    <a href="{{ url_for('delete_entry', entry_id=loop.index-1) }}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('add_entry') }}" class="btn btn-primary">Add New Entry</a>
+    </div>
+</div>
+{% endblock %}
+

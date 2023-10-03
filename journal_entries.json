@@ -1,0 +1,16 @@
+{
+    "entries": [
+        {
+            "title": "I wont go!",
+            "datetime_utc": "2023-10-03T17:19:43.203537+00:00",
+            "text": "This is a nice Journal Entry.",
+            "media_content": []
+        },
+        {
+            "title": "Hello World!",
+            "datetime_utc": "2023-10-03T17:22:07.321386+00:00",
+            "text": "This is a python code to write something Some new characher is needed for testing and purposes.\r\nWhat is in a name?\r\nI don't know.",
+            "media_content": []
+        }
+    ]
+}

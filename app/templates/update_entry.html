@@ -1,0 +1,22 @@
+<!-- app/templates/update_entry.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Update Entry{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Update Journal Entry</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" id="title" name="title" value="{{ entry._title }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="text" class="form-label">Text:</label>
+                <textarea id="text" name="text" rows="4" class="form-control" required>{{ entry._text }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Entry</button>
+        </form>
+    </div>
+{% endblock %}

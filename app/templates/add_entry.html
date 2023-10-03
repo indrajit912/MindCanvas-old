@@ -1,0 +1,26 @@
+<!-- app/templates/add_entry.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Add Entry{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1 class="mt-5">Add Journal Entry</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title:</label>
+                <input type="text" id="title" name="title" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="text" class="form-label">Text:</label>
+                <textarea id="text" name="text" class="form-control" rows="10" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Entry</button>
+        </form>
+    </div>
+
+{% endblock %}
