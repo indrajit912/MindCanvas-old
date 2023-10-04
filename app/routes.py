@@ -10,7 +10,8 @@ Attributes:
     app (Flask): The Flask web application instance.
 """
 
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
+from functools import wraps
 from app import app
 from datetime import datetime
 import pytz, logging
@@ -19,12 +20,9 @@ from app.journal import JournalEntry
 from app.database import *
 from config import *
 from werkzeug.routing import UUIDConverter
-import uuid
 
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
-
-# TODO: Add admin login to all routes.
 
 # Register the UUID converter
 app.url_map.converters['uuid'] = UUIDConverter
@@ -43,6 +41,36 @@ if not JOURNAL_JSON_DB_PATH.exists():
     create_blank_db(json_filepath=JOURNAL_JSON_DB_PATH)
     logger.info("Blank JSON database file created!")
 
+######################################################################
+#                          Admin Login
+######################################################################
+
+# Route for the admin login page
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    print_fls = False
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            return redirect(url_for('index'))
+        else:
+            print_fls = True
+            flash("Wrong username or password!", "error")  # Flash the message only on login failure
+
+    return render_template('admin_login.html', print_fls=print_fls)
+
+# Custom decorator to force login
+def admin_login_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if 'admin_logged_in' in session and session['admin_logged_in']:
+            return func(*args, **kwargs)
+        else:
+            return redirect(url_for('admin_login'))
+    return decorated_view
+
 
 ######################################################################
 #                           Home
@@ -55,9 +83,8 @@ def index():
     Returns:
         str: The rendered HTML template for the index page.
     """
-    logger.info('Visited the index route.')
     return render_template('index.html')
-
+    
 
 # Define a custom Jinja2 filter to format datetime to IST
 @app.template_filter('datetimeformat')
@@ -81,6 +108,7 @@ def datetimeformat(value:str, format='%b %d, %Y %H:%M:%S %Z'):
     return ist_datetime.strftime(format)
 
 @app.route('/view_entries')
+@admin_login_required
 def view_entries():
     # Load journal entries from the JSON database file
     entries = load_database(JOURNAL_JSON_DB_PATH)['entries']
@@ -93,6 +121,7 @@ def view_entries():
 
 
 @app.route('/add_entry', methods=['GET', 'POST'])
+@admin_login_required
 def add_entry():
     # Create the JSON database file if it doesn't exist
     if not JOURNAL_JSON_DB_PATH.exists():
@@ -151,6 +180,7 @@ def view_entry(entry_id):
 
 
 @app.route('/update_entry/<uuid:entry_id>', methods=['GET', 'POST'])
+@admin_login_required
 def update_entry(entry_id):
     # Create the JSON database file if it doesn't exist
     if not JOURNAL_JSON_DB_PATH.exists():
@@ -203,6 +233,7 @@ def update_entry(entry_id):
 
 
 @app.route('/delete_entry/<uuid:entry_id>')
+@admin_login_required
 def delete_entry(entry_id):
     # Create the JSON database file if it doesn't exist
     if not JOURNAL_JSON_DB_PATH.exists():
