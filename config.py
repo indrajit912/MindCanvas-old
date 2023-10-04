@@ -4,7 +4,6 @@ Flask App Configuration
 This module defines configuration settings for the Flask web application.
 
 """
-import os
 from os.path import join, dirname
 from dotenv import load_dotenv
 from pathlib import Path
@@ -18,6 +17,10 @@ FLASK_SECRET_KEY = "Hdksfol324khkj"
 
 FERNET_FILE = BASE_DIR / '.fernetkey'
 
-# Predefined admin credentials (change these to your actual credentials)
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = 'password'
+ADMIN_JSON_FILE = BASE_DIR / 'admin.json'
+
+DEFAULT_ADMIN = {
+    "admin_username": "admin",
+    "admin_password_hash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", # SHA256('password')
+    "salt": ''
+}

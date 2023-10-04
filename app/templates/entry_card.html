@@ -1,0 +1,19 @@
+<!-- 
+    app/templates/entry_card.html 
+    NOTE: `entry` should be same as the output of JournalEntry.to_dict()
+-->
+
+<div class="col-md-6 mb-4">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{ entry.title }}</h2>
+            <p class="card-text"><strong>Date & Time (IST):</strong> <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span></p>
+            <p class="card-text"><strong>Text:</strong> {{ entry.text[:60] + "...." }}</p>
+        </div>
+        <div class="card-footer">
+            <a href="{{ url_for('view_entry', entry_id=entry.id) }}" class="btn btn-primary">View</a>
+            <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to update this entry?')">Update</a>
+            <a href="{{ url_for('delete_entry', entry_id=entry.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</a>
+        </div>
+    </div>
+</div>

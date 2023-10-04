@@ -15,11 +15,11 @@ from functools import wraps
 from app import app
 from datetime import datetime
 import pytz, logging
-from cryptography.fernet import Fernet
 from app.journal import JournalEntry
 from app.database import *
 from config import *
 from werkzeug.routing import UUIDConverter
+from app.authentication import user_login_successful
 
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
@@ -27,23 +27,6 @@ logger = logging.getLogger(__name__)
 # Register the UUID converter
 app.url_map.converters['uuid'] = UUIDConverter
 
-if not FERNET_FILE.exists():
-        # Generate a new key and save it
-        key = Fernet.generate_key()
-
-        # Save the key to the file
-        with open(FERNET_FILE, 'wb') as key_file:
-            key_file.write(key)
-        
-        logger.info("Fernet file created with a new fernet key!")
-
-if not JOURNAL_JSON_DB_PATH.exists():
-    create_blank_db(json_filepath=JOURNAL_JSON_DB_PATH)
-    logger.info("Blank JSON database file created!")
-
-######################################################################
-#                          Admin Login
-######################################################################
 
 # Route for the admin login page
 @app.route('/admin_login', methods=['GET', 'POST'])
@@ -52,7 +35,8 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+        if user_login_successful(username=username, password=password):
+            logger.info("Admin login successful!")
             session['admin_logged_in'] = True
             return redirect(url_for('index'))
         else:
@@ -114,7 +98,7 @@ def view_entries():
     entries = load_database(JOURNAL_JSON_DB_PATH)['entries']
 
     # Reverse the entries to get last added entries first.
-    entries = entries[::-1] 
+    entries = entries[::-1] # list of dicts
 
     logger.info('Visited the view_entries route.')
     return render_template('view_entries.html', entries=entries)

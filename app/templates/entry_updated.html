@@ -1,3 +1,7 @@
+<!-- 
+    app/templates/entry_updated.html 
+    NOTE: `entry` should be same as the output of JournalEntry.to_dict()
+-->
 {% extends "base.html" %}
 
 {% block title %}Update Entry{% endblock %}
@@ -8,21 +12,9 @@
         {{ get_flashed_messages()[0] }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
+
     <!-- Display the updated entry -->
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title">{{ entry.title }}</h2>
-                <p class="card-text"><strong>Date & Time (IST):</strong> <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span></p>
-                <p class="card-text"><strong>Text:</strong> {{ entry.text[:60] + "...." }}</p>
-            </div>
-            <div class="card-footer">
-                <a href="{{ url_for('view_entry', entry_id=entry.id) }}" class="btn btn-primary">View</a>
-                <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning">Update</a>
-                <a href="{{ url_for('delete_entry', entry_id=entry.id) }}" class="btn btn-danger">Delete</a>
-            </div>
-        </div>
-    </div>
+    {% include 'entry_card.html' %}
 
     <div class="card-footer">
         <a href="{{ url_for('view_entries') }}" class="btn btn-primary">View All Entries</a>
