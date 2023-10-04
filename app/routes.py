@@ -24,6 +24,8 @@ import uuid
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
 
+# TODO: Add admin login to all routes.
+
 # Register the UUID converter
 app.url_map.converters['uuid'] = UUIDConverter
 
@@ -34,9 +36,12 @@ if not FERNET_FILE.exists():
         # Save the key to the file
         with open(FERNET_FILE, 'wb') as key_file:
             key_file.write(key)
+        
+        logger.info("Fernet file created with a new fernet key!")
 
 if not JOURNAL_JSON_DB_PATH.exists():
     create_blank_db(json_filepath=JOURNAL_JSON_DB_PATH)
+    logger.info("Blank JSON database file created!")
 
 
 ######################################################################
@@ -188,8 +193,11 @@ def update_entry(entry_id):
         # Log it
         logger.info('Updated one JournalEntry!')
 
-        # Redirect to the page that displays the updated entries
-        return redirect(url_for('view_entries'))
+        # Flash
+        flash("Journal Entry updated successfully!")
+
+        # Render the template.
+        return render_template('entry_updated.html', entry=entry.to_dict())
 
     return render_template('update_entry.html', entry=entry)
 
@@ -222,8 +230,11 @@ def delete_entry(entry_id):
     entries_data['entries'] = entries
     save_database(data=entries_data, outputFileName=JOURNAL_JSON_DB_PATH)
 
+    # Flash the messg
+    flash("Entry deleted successfully!")
+
     # Log it
     logger.info('Deleted a JournalEntry!')
 
     # Redirect to the page that displays the updated entries
-    return redirect(url_for('view_entries'))
+    return render_template('entry_deleted.html')

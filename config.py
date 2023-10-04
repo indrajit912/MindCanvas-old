@@ -17,3 +17,7 @@ JOURNAL_JSON_DB_PATH = BASE_DIR / 'journal_entries.json'
 FLASK_SECRET_KEY = "Hdksfol324khkj"
 
 FERNET_FILE = BASE_DIR / '.fernetkey'
+
+# Predefined admin credentials (change these to your actual credentials)
+ADMIN_USERNAME = 'admin'
+ADMIN_PASSWORD = 'password'
