@@ -9,6 +9,7 @@ Attributes:
 from flask import Flask
 import logging
 from config import *
+from app.api import api
 
 app = Flask(__name__)
 
@@ -21,6 +22,8 @@ logging.basicConfig(
 )
 
 app.config['SECRET_KEY'] = FLASK_SECRET_KEY
+
+app.register_blueprint(api, url_prefix='/api')
 
 # Import routes after configuring logging to ensure proper logging in routes.py
 from app import routes
