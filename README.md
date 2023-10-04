@@ -2,7 +2,9 @@
 
 MindCanvas is a simple web application built using Flask that allows you to journal your thoughts, ideas, and experiences. You can create, view, update, and delete journal entries through an easy-to-use web interface.
 
-Website: [MindCanvas on Render!](https://mindcanvas-f793.onrender.com/)
+- Website: [MindCanvas on Render!](https://mindcanvas-f793.onrender.com/)
+- Default username: `admin`
+- Default password: `password`
 
 <!-- ![MindCanvas Screenshot](/path/to/screenshot.png) -->
 
@@ -12,7 +14,8 @@ Website: [MindCanvas on Render!](https://mindcanvas-f793.onrender.com/)
 - **View Entries**: Browse through your previous journal entries with the ability to read, search, and filter.
 - **Update Entries**: Edit and update your existing entries to reflect changes or add more details.
 - **Delete Entries**: Remove entries you no longer need.
-- **Timezone Support**: Timestamps are displayed in your local timezone (IST - Indian Standard Time by default).
+- **Download Data**: You have the option to retrieve the `json` file containing all the data stored on the server.
+- **Data Security and Password Management**: All your data is securely encrypted with a password. The default credentials are username=admin and password=password. You have the flexibility to change the password at any time, but it is crucial to ensure you do not lose it. Without this password, you will be unable to access your data. This measure is in place to safeguard your data privacy. 
 
 ## Getting Started
 
