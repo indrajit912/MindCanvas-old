@@ -39,7 +39,7 @@ def admin_login():
             session['admin_logged_in'] = True
             flash(
                 category="info",
-                message="Successfully logged in as administrator!"
+                message="Successfully logged in as administrator! Now you can visit all tabs."
             )
             return redirect(url_for('index'))
         else:
@@ -87,7 +87,7 @@ def update_credentials():
 
 
 ######################################################################
-#                           Home
+#                           Routes
 ######################################################################
 @app.route('/')
 def index():

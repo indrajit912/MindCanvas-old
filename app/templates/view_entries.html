@@ -15,7 +15,9 @@
 
     <div class="mt-4">
         <a href="{{ url_for('add_entry') }}" class="btn btn-primary btn-add-entry">Add New Entry</a>
+        <a href="{{ url_for('api.export_data', download=True) }}" class="btn btn-success btn-add-entry">Download Data</a>
     </div>
+    
     <br>
 
     <div class="row">
