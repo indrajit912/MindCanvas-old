@@ -1,6 +1,7 @@
 
 ### Python ###
 .fernetkey
+journal_entries
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
