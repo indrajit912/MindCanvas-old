@@ -19,7 +19,7 @@ from app.journal import JournalEntry
 from app.database import *
 from config import *
 from werkzeug.routing import UUIDConverter
-from app.authentication import user_login_successful
+from app.authentication import user_login_successful, save_new_admin_credentials
 
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
@@ -54,6 +54,28 @@ def admin_login_required(func):
         else:
             return redirect(url_for('admin_login'))
     return decorated_view
+
+@app.route('/update_credentials', methods=['GET', 'POST'])
+def update_credentials():
+    if request.method == 'POST':
+        old_username = request.form['old_username']
+        old_password = request.form['old_password']
+        new_username = request.form['new_username']
+        new_password = request.form['new_password']
+
+        # Check if old credentials are correct
+        if user_login_successful(username=old_username, password=old_password):
+            # Update the admin username and/or password
+            new_password = None if new_password == '' else new_password
+            new_username = None if new_username == '' else new_username
+            save_new_admin_credentials(new_username=new_username, new_password=new_password)
+
+            flash("Credentials updated successfully!", "success")
+            return redirect(url_for('admin_login'))
+        else:
+            flash("Incorrect old credentials. Please try again.", "error")
+
+    return render_template('update_credentials.html')
 
 
 ######################################################################
