@@ -27,6 +27,17 @@ logger = logging.getLogger(__name__)
 # Register the UUID converter
 app.url_map.converters['uuid'] = UUIDConverter
 
+if not FERNET_FILE.exists():
+        # Generate a new key and save it
+        key = Fernet.generate_key()
+
+        # Save the key to the file
+        with open(FERNET_FILE, 'wb') as key_file:
+            key_file.write(key)
+
+if not JOURNAL_JSON_DB_PATH.exists():
+    create_blank_db(json_filepath=JOURNAL_JSON_DB_PATH)
+
 
 ######################################################################
 #                           Home
