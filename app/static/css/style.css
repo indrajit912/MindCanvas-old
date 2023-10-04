@@ -14,10 +14,6 @@ body {
     line-height: 1.6;
 }
 
-.datetime {
-    color: #666;
-}
-
 /* Add these custom styles to your style.css */
 
 /* Style for the container */
@@ -48,7 +44,6 @@ body {
 
 /* Style for the datetime section */
 .datetime {
-    font-style: italic;
     color: #666; /* Datetime color */
 }
 
