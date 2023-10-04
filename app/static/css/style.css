@@ -14,3 +14,50 @@ body {
     line-height: 1.6;
 }
 
+.datetime {
+    color: #666;
+}
+
+/* Add these custom styles to your style.css */
+
+/* Style for the container */
+.container {
+    margin-top: 20px;
+}
+
+/* Style for the "Add New Entry" button */
+.btn-add-entry {
+    margin-top: 10px;
+}
+
+/* Style for the card */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #fff; /* Card background color */
+}
+
+/* Style for the card title */
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Card title color */
+}
+
+/* Style for the datetime section */
+.datetime {
+    font-style: italic;
+    color: #666; /* Datetime color */
+}
+
+/* Style for the "View," "Update," and "Delete" buttons */
+.card-footer a.btn {
+    margin-right: 10px;
+}
+
+/* Style for the "Show All" button */
+.show-all-btn {
+    margin-top: 20px;
+}

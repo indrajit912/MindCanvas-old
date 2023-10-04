@@ -69,6 +69,9 @@ def view_entries():
     # Load journal entries from the JSON database file
     entries = load_database(JOURNAL_JSON_DB_PATH)['entries']
 
+    # Reverse the entries to get last added entries first.
+    entries = entries[::-1] 
+
     logger.info('Visited the view_entries route.')
     return render_template('view_entries.html', entries=entries)
 
