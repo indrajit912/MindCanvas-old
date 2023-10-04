@@ -56,3 +56,16 @@ body {
 .show-all-btn {
     margin-top: 20px;
 }
+
+/* Style the <pre> element */
+pre {
+    /* Set a maximum width for the container */
+    max-width: 100%;
+    /* Allow text to wrap to the next line when it reaches the maximum width */
+    word-wrap: break-word;
+    /* Preserve newline characters (\n) and display them as line breaks */
+    white-space: pre-wrap;
+    /* Add some padding and margin for better spacing */
+    padding: 10px;
+    margin: 0;
+}

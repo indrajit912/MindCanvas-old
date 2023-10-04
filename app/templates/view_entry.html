@@ -7,7 +7,7 @@
     <h1 class="display-4">{{ entry.title }}</h1>
     <p><strong>Date & Time (IST):</strong> {{ entry.datetime_utc|datetimeformat }}</p>
     <p><strong>Text:</strong></p>
-    <p>{{ entry.text }}</p>
+    <pre>{{ entry.text }}</pre>
     
     <div class="mt-4">
         <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to update this entry?')">Update</a>
