@@ -18,6 +18,31 @@ Note:
 """
 
 from app import app
+import webbrowser
+from waitress import serve
+from config import *
+from app.routes import create_blank_db
+from cryptography.fernet import Fernet
+
+def main():
+    if not FERNET_FILE.exists():
+        # Generate a new key and save it
+        key = Fernet.generate_key()
+
+        # Save the key to the file
+        with open(FERNET_FILE, 'wb') as key_file:
+            key_file.write(key)
+
+    if not JOURNAL_JSON_DB_PATH.exists():
+        create_blank_db(json_filepath=JOURNAL_JSON_DB_PATH)
+
+    
+    # webbrowser.open("http://0.0.0.0:5000/")
+    # serve(app, port=5000)
+
+    app.run(host='0.0.0.0', port=5000, debug=True)
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    main()
+    
