@@ -13,16 +13,19 @@ Attributes:
 from flask import render_template, request, redirect, url_for, flash
 from app import app
 from datetime import datetime
-import json, pytz
+import pytz, logging
 from cryptography.fernet import Fernet
 from app.journal import JournalEntry
 from app.database import *
 from config import *
-
-import logging
+from werkzeug.routing import UUIDConverter
+import uuid
 
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
+
+# Register the UUID converter
+app.url_map.converters['uuid'] = UUIDConverter
 
 
 ######################################################################
@@ -66,6 +69,7 @@ def view_entries():
     # Load journal entries from the JSON database file
     entries = load_database(JOURNAL_JSON_DB_PATH)['entries']
 
+    logger.info('Visited the view_entries route.')
     return render_template('view_entries.html', entries=entries)
 
 
@@ -91,13 +95,17 @@ def add_entry():
 
         # Save the updated entries back to the JSON database
         save_database(data={"entries":entries}, outputFileName=JOURNAL_JSON_DB_PATH)
+
+        # Log it
+        logger.info('Added a new JournalEntry!')
+
         # Redirect to the page that displays the entries
         return redirect(url_for('view_entries'))
 
     return render_template('add_entry.html')
 
 
-@app.route('/view_entry/<int:entry_id>')
+@app.route('/view_entry/<uuid:entry_id>')
 def view_entry(entry_id):
     # Retrieve the journal entry with the specified entry_id from your data source
     # Create the JSON database file if it doesn't exist
@@ -109,20 +117,21 @@ def view_entry(entry_id):
     entries = entries_data['entries']
 
     # Check if the entry_id is valid
-    if entry_id < 0 or entry_id >= len(entries):
-        # Handle the case of an invalid entry_id (e.g., display an error message or redirect)
-        return "Invalid Entry ID"
-
-    entry = entries[entry_id]
+    entry = None
+    for journal_entry in entries:
+        if journal_entry.get('id') == str(entry_id):
+            entry = journal_entry
+            break
 
     if entry is None:
         # Handle the case when the entry with the given ID does not exist
         return "Entry not found", 404
 
+    logger.info('Viewed one JournalEntry!')
     return render_template('view_entry.html', entry=entry, entry_id=entry_id)
 
 
-@app.route('/update_entry/<int:entry_id>', methods=['GET', 'POST'])
+@app.route('/update_entry/<uuid:entry_id>', methods=['GET', 'POST'])
 def update_entry(entry_id):
     # Create the JSON database file if it doesn't exist
     if not JOURNAL_JSON_DB_PATH.exists():
@@ -133,11 +142,15 @@ def update_entry(entry_id):
     entries = entries_data['entries']
 
     # Check if the entry_id is valid
-    if entry_id < 0 or entry_id >= len(entries):
-        # Handle the case of an invalid entry_id (e.g., display an error message or redirect)
-        return "Invalid Entry ID"
+    entry = None
+    for journal_entry in entries:
+        if journal_entry.get('id') == str(entry_id):
+            entry = JournalEntry.from_dict(journal_entry)
+            break
 
-    entry = JournalEntry.from_dict(entries[entry_id])
+    if entry is None:
+        # Handle the case when the entry with the given ID does not exist
+        return "Entry not found", 404
 
     if request.method == 'POST':
         # Get data from the form
@@ -149,11 +162,17 @@ def update_entry(entry_id):
         entry._text = text
 
         # Update the entry in the entries list
-        entries[entry_id] = entry.to_dict()
+        for index, journal_entry in enumerate(entries):
+            if journal_entry.get('id') == str(entry_id):
+                entries[index] = entry.to_dict()
+                break
 
         # Save the updated entries back to the JSON database
         entries_data['entries'] = entries
         save_database(data=entries_data, outputFileName=JOURNAL_JSON_DB_PATH)
+
+        # Log it
+        logger.info('Updated one JournalEntry!')
 
         # Redirect to the page that displays the updated entries
         return redirect(url_for('view_entries'))
@@ -161,7 +180,7 @@ def update_entry(entry_id):
     return render_template('update_entry.html', entry=entry)
 
 
-@app.route('/delete_entry/<int:entry_id>')
+@app.route('/delete_entry/<uuid:entry_id>')
 def delete_entry(entry_id):
     # Create the JSON database file if it doesn't exist
     if not JOURNAL_JSON_DB_PATH.exists():
@@ -172,19 +191,25 @@ def delete_entry(entry_id):
     entries = entries_data['entries']
 
     # Check if the entry_id is valid
-    if entry_id < 0 or entry_id >= len(entries):
-        # Flash an error message and redirect to the home page
-        flash("Invalid Entry ID", "error")
-        return redirect(url_for('home'))
+    entry_index = None
+    for index, journal_entry in enumerate(entries):
+        if journal_entry.get('id') == str(entry_id):
+            entry_index = index
+            break
+
+    if entry_index is None:
+        # Handle the case when the entry with the given ID does not exist
+        return "Entry not found", 404
 
     # Delete the entry with the specified entry_id
-    entries.pop(entry_id)
+    entries.pop(entry_index)
 
     # Save the updated entries back to the JSON database
-    entries_data = {"entries": entries}
+    entries_data['entries'] = entries
     save_database(data=entries_data, outputFileName=JOURNAL_JSON_DB_PATH)
 
-    # Flash a success message and redirect to the home page
-    flash("Entry Deleted Successfully", "success")
-    entries = load_database(JOURNAL_JSON_DB_PATH)['entries']
-    return render_template('entry_deleted.html', entries=entries)
+    # Log it
+    logger.info('Deleted a JournalEntry!')
+
+    # Redirect to the page that displays the updated entries
+    return redirect(url_for('view_entries'))

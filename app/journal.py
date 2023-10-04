@@ -1,13 +1,13 @@
 import json
 from datetime import datetime, timedelta
-import pytz
+import pytz, uuid
 
 class JournalEntry:
     """
     Represents a journal entry with attributes such as title, datetime, text, photos, and videos.
     """
 
-    def __init__(self, title:str, datetime_utc:datetime, text:str="", media_content=None):
+    def __init__(self, title:str, datetime_utc:datetime, text:str="", media_content=None, id:str=None):
         """
         Initialize a JournalEntry instance.
 
@@ -21,6 +21,7 @@ class JournalEntry:
         self._datetime_utc = datetime_utc
         self._text = text
         self._media_content = media_content or []
+        self._id = id if id else str(uuid.uuid4())
 
     def convert_utc_to_ist(self):
         """
@@ -52,6 +53,14 @@ class JournalEntry:
         """
         return f"JournalEntry(title='{self._title}', datetime_utc={self._datetime_utc}, text='{self._text}')"
     
+    @property
+    def id(self):
+        return self._id
+    
+    @id.setter
+    def id(self, new:str):
+        self._id = new
+
     def to_dict(self):
         """
         Serialize the journal entry into a JSON representation.
@@ -63,7 +72,8 @@ class JournalEntry:
             "title": self._title,
             "datetime_utc": self._datetime_utc.isoformat(),
             "text": self._text,
-            "media_content": self._media_content
+            "media_content": self._media_content,
+            "id":self._id
         }
         return entry_data
     
@@ -82,11 +92,13 @@ class JournalEntry:
         datetime_utc = datetime.fromisoformat(data.get("datetime_utc"))
         text = data.get("text", "")
         media_content = data.get("media_content", [])
+        _id = data.get("id")
         return cls(
             title=title,
             datetime_utc=datetime_utc,
             text=text,
-            media_content=media_content
+            media_content=media_content,
+            id=_id
         )
 
 
