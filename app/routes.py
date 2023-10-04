@@ -31,19 +31,21 @@ app.url_map.converters['uuid'] = UUIDConverter
 # Route for the admin login page
 @app.route('/admin_login', methods=['GET', 'POST'])
 def admin_login():
-    print_fls = False
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
         if user_login_successful(username=username, password=password):
             logger.info("Admin login successful!")
             session['admin_logged_in'] = True
+            flash(
+                category="info",
+                message="Successfully logged in as administrator!"
+            )
             return redirect(url_for('index'))
         else:
-            print_fls = True
-            flash("Wrong username or password!", "error")  # Flash the message only on login failure
+            flash(message="Wrong username or password!", category="error")  # Flash the message only on login failure
 
-    return render_template('admin_login.html', print_fls=print_fls)
+    return render_template('admin_login.html')
 
 # Custom decorator to force login
 def admin_login_required(func):
@@ -70,10 +72,16 @@ def update_credentials():
             new_username = None if new_username == '' else new_username
             save_new_admin_credentials(new_username=new_username, new_password=new_password)
 
-            flash("Credentials updated successfully!", "success")
+            flash(
+                message="Credentials updated successfully!", 
+                category="success"
+            )
             return redirect(url_for('admin_login'))
         else:
-            flash("Incorrect old credentials. Please try again.", "error")
+            flash(
+                message="Incorrect old credentials. Please try again.",
+                category="error"
+            )
 
     return render_template('update_credentials.html')
 
@@ -153,6 +161,12 @@ def add_entry():
         # Log it
         logger.info('Added a new JournalEntry!')
 
+        # Flash message
+        flash(
+            category="success",
+            message="JournalEntry added successfully!"
+        )
+
         # Redirect to the page that displays the entries
         return redirect(url_for('view_entries'))
 
@@ -230,7 +244,10 @@ def update_entry(entry_id):
         logger.info('Updated one JournalEntry!')
 
         # Flash
-        flash("Journal Entry updated successfully!")
+        flash(
+            category="success",
+            message="Journal Entry updated successfully!"
+        )
 
         # Render the template.
         return render_template('entry_updated.html', entry=entry.to_dict())
@@ -268,10 +285,13 @@ def delete_entry(entry_id):
     save_database(data=entries_data, outputFileName=JOURNAL_JSON_DB_PATH)
 
     # Flash the messg
-    flash("Entry deleted successfully!")
+    flash(
+        category="success",
+        message="Entry deleted successfully!"
+    )
 
     # Log it
     logger.info('Deleted a JournalEntry!')
 
     # Redirect to the page that displays the updated entries
-    return render_template('entry_deleted.html')
+    return redirect(url_for('view_entries'))

@@ -4,13 +4,7 @@
 
 {% block content %}
 
-    <!-- Flash Message on success -->
-    {% if print_fls %}
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ get_flashed_messages()[0] }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endif %}
+    {% include 'flash_msgs.html' %}
     
     <div class="container mt-5">
         <div class="row">

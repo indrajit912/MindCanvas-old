@@ -4,14 +4,15 @@
 -->
 {% extends "base.html" %}
 
-{% block title %}Update Entry{% endblock %}
+{% block title %}Entry Updated!{% endblock %}
 
 {% block content %}
     <!-- Flash Message on success -->
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ get_flashed_messages()[0] }}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+    </div> -->
+    {% include 'flash_msgs.html' %}
 
     <!-- Display the updated entry -->
     {% include 'entry_card.html' %}
