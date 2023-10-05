@@ -54,14 +54,14 @@ def upload_json_file():
     # Check if a file was submitted in the request
     if 'json_file' not in request.files:
         flash('No file provided', 'error')
-        return redirect(url_for('index'))  # Redirect to an admin page
+        return redirect(url_for('upload_database'))  # Redirect to an admin page
 
     json_file = request.files['json_file']
 
     # Check if the file has a valid JSON extension
     if not json_file.filename.endswith('.json'):
         flash('Invalid file format. Please upload a JSON file.', 'error')
-        return redirect(url_for('index'))  # Redirect to an admin page
+        return redirect(url_for('upload_database'))  # Redirect to an admin page
 
     # Save the uploaded file to the JOURNAL_JSON_DB_PATH location, replacing the existing file
     json_file.save(JOURNAL_JSON_DB_PATH)

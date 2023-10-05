@@ -2,6 +2,7 @@
 ### Python ###
 .fernetkey
 admin.json
+backups
 journal_entries.json
 # Byte-compiled / optimized / DLL files
 __pycache__/
