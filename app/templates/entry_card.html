@@ -7,8 +7,13 @@
     <div class="card">
         <div class="card-body">
             <h2 class="card-title">{{ entry.title }}</h2>
-            <p class="card-text"><strong>Date & Time (IST):</strong> <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span></p>
-            <p class="card-text"><strong>Text:</strong> {{ entry.text[:60] + "...." }}</p>
+            <p class="card-text">
+                <!-- <strong>Date & Time (IST):</strong>  -->
+                <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span>
+            </p>
+            <p class="card-text">
+                {{ entry.text[:60] + "...." }}
+            </p>
         </div>
         <div class="card-footer">
             <a href="{{ url_for('view_entry', entry_id=entry.id) }}" class="btn btn-primary">View</a>

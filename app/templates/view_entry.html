@@ -5,8 +5,11 @@
 {% block content %}
 <div class="container mt-5">
     <h1 class="display-4">{{ entry.title }}</h1>
-    <p><strong>Date & Time (IST):</strong> {{ entry.datetime_utc|datetimeformat }}</p>
-    <p><strong>Text:</strong></p>
+    <p>
+        <!-- <strong>Date & Time (IST):</strong>  -->
+        {{ entry.datetime_utc|datetimeformat }}
+    </p>
+    
     <pre>{{ entry.text }}</pre>
     
     <div class="mt-4">
