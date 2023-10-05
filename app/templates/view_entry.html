@@ -14,5 +14,6 @@
         <a href="{{ url_for('delete_entry', entry_id=entry.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this entry?')">Delete</a>
         <a href="{{ url_for('view_entries') }}" class="btn btn-primary">Back to Entries</a>
     </div>
+    <br>
 </div>
 {% endblock %}
