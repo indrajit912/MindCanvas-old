@@ -106,14 +106,14 @@ def upload_database():
 
 # Define a custom Jinja2 filter to format datetime to IST
 @app.template_filter('datetimeformat')
-def datetimeformat(value:str, format='%b %d, %Y %H:%M:%S %Z'):
+def datetimeformat(value:str, format='%b %d, %Y %I:%M:%S %p %Z'):
     """
     Custom Jinja2 filter to format a datetime object to a specified format.
     Default format is '%Y-%m-%d %H:%M:%S %Z'.
 
     Args:
         value (datetime): The datetime object to format.
-        format (str, optional): The desired format. Defaults to '%Y-%m-%d %H:%M:%S %Z'.
+        format (str, optional): The desired format. Defaults to '%b %d, %Y %I:%M:%S %p %Z'.
 
     Returns:
         str: The formatted datetime as a string.
