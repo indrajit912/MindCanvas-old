@@ -4,6 +4,4 @@ Flask
 gunicorn
 python-dotenv
 pytz
-waitress
 cryptography
-Flask-BasicAuth
