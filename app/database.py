@@ -29,22 +29,24 @@ def load_database(json_filePath):
 def save_database(data:dict, outputFileName):
     """Saves the dict to the DATABASE_FILE"""
 
-    # Define the backup directory path
-    backup_dir = BACKUP_DIR  # Replace with your actual backup directory path
-    if not backup_dir.exists():
-        backup_dir.mkdir()
+    # If Journal db exists then backup it
+    if JOURNAL_JSON_DB_PATH.exists():
+        # Define the backup directory path
+        backup_dir = BACKUP_DIR  # Replace with your actual backup directory path
+        if not backup_dir.exists():
+            backup_dir.mkdir()
 
-    # Create a timestamped backup of the current database
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    backup_filename = f"backup_{timestamp}.json"
-    backup_path = backup_dir / backup_filename
+        # Create a timestamped backup of the current database
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        backup_filename = f"backup_{timestamp}.json"
+        backup_path = backup_dir / backup_filename
 
-    # Getting the decrypted content of the current database using load_database()
-    db_content = load_database(json_filePath=JOURNAL_JSON_DB_PATH)
+        # Getting the decrypted content of the current database using load_database()
+        db_content = load_database(json_filePath=JOURNAL_JSON_DB_PATH)
 
-    # Backup this decrypted content into a json
-    with open(backup_path, 'w') as f:
-        f.write(json.dumps(db_content, indent=4))
+        # Backup this decrypted content into a json
+        with open(backup_path, 'w') as f:
+            f.write(json.dumps(db_content, indent=4))
 
     # Get the Fernet key
     key = open(FERNET_FILE, 'rb').read()
