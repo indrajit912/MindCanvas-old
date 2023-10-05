@@ -19,7 +19,7 @@ from app.journal import JournalEntry
 from app.database import *
 from config import *
 from werkzeug.routing import UUIDConverter
-from app.authentication import user_login_successful, save_new_admin_credentials
+from app.authentication import user_login_successful, save_new_admin_credentials, generate_token, admin_login_required
 
 # Create a logger for the routes module
 logger = logging.getLogger(__name__)
@@ -34,12 +34,19 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
         if user_login_successful(username=username, password=password):
             logger.info("Admin login successful!")
+
+            # Generate a token for the user upon successful login
+            token = generate_token(username)
+
+            session['token'] = token
             session['admin_logged_in'] = True
+
             flash(
                 category="info",
-                message="Successfully logged in as administrator! Now you can visit all tabs."
+                message=f"Successfully logged in as administrator! Now you can visit all tabs."
             )
             return redirect(url_for('index'))
         else:
@@ -47,15 +54,6 @@ def admin_login():
 
     return render_template('admin_login.html')
 
-# Custom decorator to force login
-def admin_login_required(func):
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        if 'admin_logged_in' in session and session['admin_logged_in']:
-            return func(*args, **kwargs)
-        else:
-            return redirect(url_for('admin_login'))
-    return decorated_view
 
 @app.route('/update_credentials', methods=['GET', 'POST'])
 def update_credentials():
@@ -98,6 +96,12 @@ def index():
         str: The rendered HTML template for the index page.
     """
     return render_template('index.html')
+
+
+# Define the route for 'upload_db'
+@app.route('/upload_database', methods=['GET'])
+def upload_database():
+    return render_template('upload_database.html')
     
 
 # Define a custom Jinja2 filter to format datetime to IST

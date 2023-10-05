@@ -6,3 +6,4 @@ python-dotenv
 pytz
 waitress
 cryptography
+Flask-BasicAuth

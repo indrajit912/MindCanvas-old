@@ -1,0 +1,22 @@
+<!-- upload_db.html -->
+{% extends "base.html" %}
+
+{% block title %}Upload Database{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="display-4 mb-4">Upload Database</h1>
+
+    <div class="mt-4">
+        <form action="{{ url_for('api.upload_json_file') }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Select a JSON File for Upload</label>
+                <input class="form-control" type="file" id="json_file" name="json_file" accept=".json" required>
+              </div>
+            <button type="submit" class="btn btn-primary">Upload JSON File</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -15,7 +15,8 @@
 
     <div class="mt-4">
         <a href="{{ url_for('add_entry') }}" class="btn btn-primary btn-add-entry">Add New Entry</a>
-        <a href="{{ url_for('api.export_data', download=True) }}" class="btn btn-success btn-add-entry">Download Data</a>
+        <a href="{{ url_for('api.export_data', download=True, token=session['token']) }}" class="btn btn-success btn-add-entry">Download Data</a>
+        <a href="{{ url_for('upload_database') }}" class="btn btn-warning btn-add-entry">Upload Database</a>  <!-- Add this button -->
     </div>
     
     <br>

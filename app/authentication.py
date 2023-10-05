@@ -4,6 +4,24 @@
 
 from config import *
 import json, hashlib, secrets
+from itsdangerous import URLSafeSerializer, BadSignature
+from flask import session, redirect, url_for
+from functools import wraps
+
+# Initialize the serializer
+serializer = URLSafeSerializer(FLASK_SECRET_KEY)
+
+# Function to generate a token for a user
+def generate_token(username):
+    return serializer.dumps(username)
+
+def verify_token(token):
+    try:
+        # Attempt to load and verify the token
+        username = serializer.loads(token)
+        return True  # Token is valid
+    except BadSignature:
+        return False  # Token is invalid
 
 def sha256_hash(raw_text):
     """Return the hex hash value"""
@@ -20,6 +38,16 @@ def generate_random_salt(length:int=16):
 ######################################################################
 #                          Admin Login
 ######################################################################
+
+# Custom decorator to force login
+def admin_login_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if 'admin_logged_in' in session and session['admin_logged_in']:
+            return func(*args, **kwargs)
+        else:
+            return redirect(url_for('admin_login'))
+    return decorated_view
 
 def user_login_successful(username, password):
     """Returns Bool"""
