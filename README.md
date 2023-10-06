@@ -27,46 +27,53 @@ MindCanvas is a simple web application built using Flask that allows you to jour
 
 To get started with MindCanvas, follow these steps to download and run the provided installation script for your operating system. Make sure you have Python 3 and Git installed.
 
-### Installation on Linux/macOS
+This guide will walk you through the process of installing and setting up MindCanvas, a Flask-based journaling app.
 
-1. Download the installation script for Linux/macOS by clicking [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/indrajit912/MindCanvas/blob/master/scripts/install.sh).
+### Prerequisites
 
-2. Open your terminal.
+Before you begin, make sure you have the following prerequisites installed:
 
-3. Navigate to the directory where you downloaded the script.
+- Python 3.8 or higher
+- pip (Python package manager)
+- virtualenv (recommended for creating isolated environments)
 
-4. Make the script executable with the following command:
+### Installation
+
+1. Open a terminal (or command prompt) window and clone the MindCanvas repository from GitHub:
 
    ```bash
-   chmod +x install.sh
+   git clone https://github.com/indrajit912/MindCanvas.git
    ```
-5. Run the script to install the app and its dependencies:
+
+2. Navigate to the project directory:
     ```bash
-    ./install.sh
-    ```
-6. Installation is successful! To run the app, use the following command:
-    ```bash
-    python3 run.py
+    cd MindCanvas
     ```
 
-## Installation on Windows
-1. Download the installation script for Windows by clicking [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/indrajit912/MindCanvas/blob/master/scripts/install.bat).
-
-2. Open your Command Prompt.
-
-3. Navigate to the directory where you downloaded the script.
-
-4. Run the script to install the app and its dependencies:
+3. Create a virtual environment (optional but recommended):
     ```bash
-    install.bat
+    python -m venv venv
     ```
-5. Installation is successful! To run the app, use the following command:
+4. Activate the virtual environment:
+    - On Windows:
+        ```bash
+        venv\Scripts\activate
+        ```
+    - On macOS and Linux:
+        ```bash
+        source venv/bin/activate
+        ```
+5. Install the required dependencies using pip:
     ```bash
-    python run.py
+    pip install -r requirements.txt
     ```
-That's it! You've successfully installed MindCanvas. Open your web browser and access the app at http://localhost:8080 to start using it.
- 
-For more information and usage instructions, please refer to the README.md file in the project root.
+
+### Running MindCanvas
+Once you have installed the dependencies, you can run MindCanvas using the following command:
+```bash
+python3 run.py
+```
+MindCanvas should now be running locally on your machine. You can access it by opening a web browser and navigating to http://localhost:8080.
 
 Enjoy using MindCanvas!
 
