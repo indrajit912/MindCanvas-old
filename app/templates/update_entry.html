@@ -14,9 +14,11 @@
             </div>
             <div class="mb-3">
                 <label for="text" class="form-label">Text:</label>
-                <textarea id="text" name="text" rows="4" class="form-control" required>{{ entry._text }}</textarea>
+                <textarea id="text" name="text" rows="12" class="form-control" required>{{ entry._text }}</textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Update Entry</button>
+            <button type="submit" class="btn btn-warning">Update</button>
+            <a href="{{ url_for('view_entries') }}" class="btn btn-primary">Back</a>
         </form>
+        <br>
     </div>
 {% endblock %}
