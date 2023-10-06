@@ -23,23 +23,53 @@ MindCanvas is a simple web application built using Flask that allows you to jour
 - **Download Data**: You have the option to retrieve the `json` file containing all the data stored on the server.
 - **Data Security and Password Management**: All your data is securely encrypted with a password. The default credentials are username=admin and password=password. You have the flexibility to change the password at any time, but it is crucial to ensure you do not lose it. Without this password, you will be unable to access your data. This measure is in place to safeguard your data privacy. 
 
-## Getting Started
+## Installation and Setup Guide
 
-To get started with MindCanvas, follow these steps:
+To get started with MindCanvas, follow these steps to download and run the provided installation script for your operating system. Make sure you have Python 3 and Git installed.
 
-1. Clone the repository from GitHub:
+### Installation on Linux/macOS
+
+1. Download the installation script for Linux/macOS by clicking [here](./scripts/install.sh).
+
+2. Open your terminal.
+
+3. Navigate to the directory where you downloaded the script.
+
+4. Make the script executable with the following command:
 
    ```bash
-   git clone https://github.com/indrajit912/MindCanvas.git
+   chmod +x install.sh
    ```
-2. Install the required dependencies:
+5. Run the script to install the app and its dependencies:
     ```bash
-    pip install -r requirements.txt
+    ./install.sh
     ```
-3. Run the app
+6. Installation is successful! To run the app, use the following command:
     ```bash
     python3 run.py
     ```
+
+## Installation on Windows
+1. Download the installation script for Windows by clicking [here](./scripts/install.bat).
+
+2. Open your Command Prompt.
+
+3. Navigate to the directory where you downloaded the script.
+
+4. Run the script to install the app and its dependencies:
+    ```bash
+    install.bat
+    ```
+5. Installation is successful! To run the app, use the following command:
+    ```bash
+    python run.py
+    ```
+That's it! You've successfully installed MindCanvas. Open your web browser and access the app at http://localhost:8080 to start using it.
+ 
+For more information and usage instructions, please refer to the README.md file in the project root.
+
+Enjoy using MindCanvas!
+
 
 ## Usage
 

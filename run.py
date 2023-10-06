@@ -17,9 +17,13 @@ Note:
 
 """
 
+import webbrowser
 from app import app
 
-
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+
+    # Open the web browser automatically
+    webbrowser.open_new_tab('http://localhost:8080')
     
+    # Start the Flask development server
+    app.run(host='0.0.0.0', port=8080, debug=True)
