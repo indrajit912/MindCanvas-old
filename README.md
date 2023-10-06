@@ -1,8 +1,8 @@
 # MindCanvas - A Journaling Flask Web App
 
-MindCanvas is a simple web application built using Flask that allows you to journal your thoughts, ideas, and experiences. You can create, view, update, and delete journal entries through an easy-to-use web interface.
+MindCanvas is a simple web application developed by [Indrajit Ghosh](https://github.com/indrajit912) that allows you to journal your thoughts, ideas, and experiences. Built using Flask, this user-friendly application enables you to effortlessly create, view, update, and delete journal entries through an easy-to-use web interface.
 
-- Website: [Demo on Render!](https://demo-mindcanvas.onrender.com)
+- Website: [Demo on Render!](https://demo-mindcanvas.onrender.com) (Please note that this website may take some time to load!)
 - Default username: `admin`
 - Default password: `password`
 
@@ -11,7 +11,7 @@ MindCanvas is a simple web application built using Flask that allows you to jour
 
 ## Author
 
-- **Indrajit Ghosh**
+- **[Indrajit Ghosh](https://github.com/indrajit912)**
 - **Email:** rs_math1902@isibang.ac.in
 
 ## Features
