@@ -72,4 +72,4 @@ def create_blank_db(json_filepath):
             "entries": []
         }
     """
-    save_database(data={"entries": [], "encrypted":False}, outputFileName=json_filepath)
+    save_database(data={"entries": []}, outputFileName=json_filepath)
