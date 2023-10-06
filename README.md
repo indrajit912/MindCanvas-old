@@ -29,7 +29,7 @@ To get started with MindCanvas, follow these steps to download and run the provi
 
 ### Installation on Linux/macOS
 
-1. Download the installation script for Linux/macOS by clicking [here](./scripts/install.sh).
+1. Download the installation script for Linux/macOS by clicking [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/indrajit912/MindCanvas/blob/master/scripts/install.sh).
 
 2. Open your terminal.
 
@@ -50,7 +50,7 @@ To get started with MindCanvas, follow these steps to download and run the provi
     ```
 
 ## Installation on Windows
-1. Download the installation script for Windows by clicking [here](./scripts/install.bat).
+1. Download the installation script for Windows by clicking [here](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/indrajit912/MindCanvas/blob/master/scripts/install.bat).
 
 2. Open your Command Prompt.
 
