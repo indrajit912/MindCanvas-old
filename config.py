@@ -15,7 +15,7 @@ load_dotenv(DOT_ENV_FILE)
 
 BASE_DIR = Path(__file__).resolve().parent
 JOURNAL_JSON_DB_PATH = BASE_DIR / 'journal_entries.json'
-BACKUP_DIR = BASE_DIR / "backups"
+BACKUP_DIR = BASE_DIR / ".backups"
 FLASK_SECRET_KEY = "Hdksfol324khkj"
 
 FERNET_FILE = BASE_DIR / '.fernetkey'
