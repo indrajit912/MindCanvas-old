@@ -8,7 +8,7 @@
     <p>
         <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span>
     </p>
-    <!-- TODO: Add different font style for entry.text below! -->
+    
     {% autoescape false %}
         <div class="entry-text">{{ entry.text | replace('\n', "<br/>") }}</div>
     {% endautoescape %}
