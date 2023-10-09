@@ -56,3 +56,13 @@ body {
 .show-all-btn {
     margin-top: 20px;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+.entry-text {
+    font-family: 'Roboto Mono', 'Montserrat', 'Ubuntu', 'Open Sans', sans-serif;
+}

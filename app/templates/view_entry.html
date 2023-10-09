@@ -6,12 +6,11 @@
 <div class="container mt-5">
     <h1 class="display-4">{{ entry.title }}</h1>
     <p>
-        <!-- <strong>Date & Time (IST):</strong>  -->
-        {{ entry.datetime_utc|datetimeformat }}
+        <span class="datetime">{{ entry.datetime_utc|datetimeformat }}</span>
     </p>
     <!-- TODO: Add different font style for entry.text below! -->
     {% autoescape false %}
-        <p>{{ entry.text | replace('\n', "<br/>") }}</p>
+        <div class="entry-text">{{ entry.text | replace('\n', "<br/>") }}</div>
     {% endautoescape %}
     
     <div class="mt-4">
