@@ -9,8 +9,10 @@
         <!-- <strong>Date & Time (IST):</strong>  -->
         {{ entry.datetime_utc|datetimeformat }}
     </p>
-    
-    <pre>{{ entry.text }}</pre>
+    <!-- TODO: Add different font style for entry.text below! -->
+    {% autoescape false %}
+        <p>{{ entry.text | replace('\n', "<br/>") }}</p>
+    {% endautoescape %}
     
     <div class="mt-4">
         <a href="{{ url_for('update_entry', entry_id=entry.id) }}" class="btn btn-warning" onclick="return confirm('Are you sure you want to update this entry?')">Update</a>
