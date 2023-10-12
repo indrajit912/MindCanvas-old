@@ -1,13 +1,9 @@
-<!-- 
-    app/templates/view_entries.html 
-    NOTE: `entry` should be same as the output of JournalEntry.to_dict()
--->
+<!-- app/templates/view_entries.html -->
 {% extends "base.html" %}
 
 {% block title %}View Entries{% endblock %}
 
 {% block content %}
-
 {% include 'flash_msgs.html' %}
 
 <div class="container mt-5">
@@ -16,9 +12,13 @@
     <div class="mt-4">
         <a href="{{ url_for('add_entry') }}" class="btn btn-primary btn-add-entry">Add New Entry</a>
         <a href="{{ url_for('api.export_data', download=True, token=session['token']) }}" class="btn btn-success btn-add-entry">Download Data</a>
-        <a href="{{ url_for('upload_database') }}" class="btn btn-warning btn-add-entry">Upload Database</a>  <!-- Add this button -->
+        <a href="{{ url_for('upload_database') }}" class="btn btn-warning btn-add-entry">Upload Database</a> <!-- Add this button -->
     </div>
-    
+
+    <div class="mt-4">
+        <h3>Total Entries: {{ total_entries }}</h3>
+    </div>
+
     <br>
 
     <div class="row">
@@ -26,6 +26,5 @@
             {% include 'entry_card.html' %}
         {% endfor %}
     </div>
-
 </div>
 {% endblock %}

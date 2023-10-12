@@ -132,9 +132,10 @@ def view_entries():
 
     # Reverse the entries to get last added entries first.
     entries = entries[::-1] # list of dicts
+    total_entries = len(entries)
 
     logger.info('Visited the view_entries route.')
-    return render_template('view_entries.html', entries=entries)
+    return render_template('view_entries.html', entries=entries, total_entries=total_entries)
 
 
 @app.route('/add_entry', methods=['GET', 'POST'])
