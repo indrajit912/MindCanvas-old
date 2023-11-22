@@ -6,11 +6,11 @@ This module defines configuration settings for the Flask web application.
 """
 import os
 from os.path import join, dirname
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from pathlib import Path
 
-DOT_ENV_FILE = join(dirname(__file__), '.env')
-load_dotenv(DOT_ENV_FILE)
+# DOT_ENV_FILE = join(dirname(__file__), '.env')
+# load_dotenv(DOT_ENV_FILE)
 
 
 BASE_DIR = Path(__file__).resolve().parent
