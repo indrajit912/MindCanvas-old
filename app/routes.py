@@ -357,4 +357,7 @@ def delete_past_backups():
     backup_info = [{'file': file, 'timestamp': os.path.getmtime(os.path.join(BACKUP_DIR, file))}
                    for file in backup_files]
 
+    # Sort the backup_info list based on the 'timestamp' key in reverse order
+    backup_info = sorted(backup_info, key=lambda x: x['timestamp'], reverse=True)
+
     return render_template('delete_past_backups.html', backup_info=backup_info)
