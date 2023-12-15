@@ -299,3 +299,62 @@ def delete_entry(entry_id):
 
     # Redirect to the page that displays the updated entries
     return redirect(url_for('view_entries'))
+
+
+@app.template_filter('dateformat')
+def dateformat(value, format='%b %d, %Y %I:%M:%S %p %Z'):
+    """
+    Custom Jinja2 filter to format a date string to a specified format.
+    Default format is '%Y-%m-%d %H:%M:%S %Z'.
+
+    Args:
+        value (float): The timestamp as a float.
+        format (str, optional): The desired format. Defaults to '%b %d, %Y %I:%M:%S %p %Z'.
+
+    Returns:
+        str: The formatted date as a string.
+    """
+    # Convert the Unix timestamp to a datetime object
+    dt_date_val = datetime.utcfromtimestamp(value)
+
+    # Format the date object
+    return dt_date_val.strftime(format)
+
+@app.route('/delete_past_backups', methods=['GET', 'POST'])
+def delete_past_backups():
+    if request.method == 'POST':
+        # Get the date input from the form
+        date_str = request.form.get('delete_date')
+
+        try:
+            # Parse the date string
+            delete_date = datetime.strptime(date_str, '%Y-%m-%d')
+
+            # List all backup files in the backup directory
+            backup_files = os.listdir(BACKUP_DIR)
+
+            # Iterate through backup files and delete those older than delete_date
+            for backup_file in backup_files:
+                file_date_str = backup_file.split('_')[1]
+                file_date = datetime.strptime(file_date_str, '%Y-%m-%d')
+
+                if file_date < delete_date:
+                    file_path = os.path.join(BACKUP_DIR, backup_file)
+                    os.remove(file_path)
+
+            flash(
+                category="success",
+                message=f"Backups older than {delete_date.strftime('%Y-%m-%d')} deleted successfully!"
+            )
+        except ValueError:
+            flash(
+                category="error",
+                message="Invalid date format. Please use YYYY-MM-DD."
+            )
+
+    # List all backup file timing info
+    backup_files = os.listdir(BACKUP_DIR)
+    backup_info = [{'file': file, 'timestamp': os.path.getmtime(os.path.join(BACKUP_DIR, file))}
+                   for file in backup_files]
+
+    return render_template('delete_past_backups.html', backup_info=backup_info)

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Past Backups{% endblock %}
+
+{% block content %}
+
+    {% include 'flash_msgs.html' %}
+
+
+    <h1>Delete Past Backups</h1>
+
+    <form method="post" action="{{ url_for('delete_past_backups') }}">
+        <label for="delete_date">Delete backups prior to:</label>
+        <input type="date" id="delete_date" name="delete_date" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <br>
+    <h2>Backup Files:</h2>
+    <ul>
+        {% for backup in backup_info %}
+            <li>{{ backup.file }} - {{ backup.timestamp | dateformat }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
